@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Web Service Consume</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    </head>
+    <body>
+        <div>Input Data anda!</div>
+        <hr>
+        <script>
+            
+            function post() {
+                const url = "http://localhost:8080/POST";
+                let genID = document.getElementById("myid").value;
+                let nama = document.getElementById("nama").value;
+                let NIK = document.getElementById("NIK").value;
+                let address = document.getElementById("address").value;
+                let photo = document.getElementById("photo").value;
+                let dataText = {"id": genID, "nama": nama ,"NIK": NIK,"address": address,"photo" : photo };
+                let dataJson = JSON.stringify(dataText);
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    data: dataJson,
+                    contentType: 'application/json',
+                    dataType: 'text',
+                    success: function (result) {
+                        console.log(result);
+                    }
+                });
+            }
+
+            function put() {
+                const urlp = "http://localhost:8080/PUT";
+                let editID = document.getElementById("myid").value;
+                let nama = document.getElementById("nama").value;
+                let NIK = document.getElementById("NIK").value;
+                let address = document.getElementById("address").value;
+                let photo = document.getElementById("photo").value;
+                let dataText = {"id": editID, "nama": nama ,"NIK": NIK,"address": address,"photo" : photo };
+                let dataJson = JSON.stringify(dataText);
+                $.ajax({
+                    url: urlp,
+                    method: 'PUT',
+                    data: dataJson,
+                    contentType: 'application/json',
+                    dataType: 'text',
+                    success: function (result) {
+                        console.log(result);
+                    }
+                });
+            }
+
+            function get() {
+                const urlg = "http://localhost:8080/GET";
+                $.ajax({
+                    url: urlg,
+                    method: 'GET',
+                    dataType: 'text',
+                    success: function (result) {
+                        document.getElementById("viewer").innerHTML = result;
+                    }
+                });
+            }
+
+            function delID() {
+                const urlp = "http://localhost:8080/DELETE";
+                let editID = document.getElementById("myid").value;
+                let dataText = {"id": editID};
+                let dataJson = JSON.stringify(dataText);
+                $.ajax({
+                    url: urlp,
+                    method: 'DELETE',
+                    data: dataJson,
+                    contentType: 'application/json',
+                    dataType: 'text',
+                    success: function (result) {
+                        console.log(result);
+                    }
+                });
+            }
+
+        </script>
+        Id :     <input type="text" id="myid" name="myid"> <br><!-- comment -->
+        Nama :   <input type="text" id="nama" name="nama"><br>
+        NIK :    <input type="text" id="NIK" name="NIK"><br><!-- comment -->
+        Alamat : <input type="text" id="address" name="address"><br><!-- comment -->
+        Upload Photo :  <input type='file' id ="photo" name='photo' />
+        
+        
+        <hr>
+
+        <button onclick ="get()">Tampil</button>
+        <button onclick ="post()">Kirim</button> <br>
+        <button onclick ="put()">Edit</button> 
+        <button onclick ="delID()">Hapus</button>
+        <hr>
+        <div id="viewer"></div>
+    </body>
+</html>
